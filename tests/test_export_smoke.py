@@ -4,7 +4,6 @@ Regression guard: export reads local scan state only. It must NOT call
 load_config() or require TINYFISH_API_KEY (the documented Step 6 smoke test).
 """
 import json
-import os
 
 import pytest
 
