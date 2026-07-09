@@ -36,11 +36,17 @@ ATS_LISTING_RE = re.compile(
     re.IGNORECASE,
 )
 
-SEARCH_QUERY = (
-    'site:{domain} (senior OR staff OR principal OR lead) '
-    '("data scientist" OR "ML engineer" OR "machine learning engineer" '
-    'OR "AI engineer" OR MLOps OR "deep learning")'
+DEFAULT_SEARCH_SENIORITY = "senior OR staff OR principal OR lead"
+DEFAULT_SEARCH_KEYWORDS = (
+    '"data scientist" OR "ML engineer" OR "machine learning engineer" '
+    'OR "AI engineer" OR MLOps OR "deep learning"'
 )
+
+
+def build_search_query(domain: str, candidate: dict) -> str:
+    seniority = candidate.get("search_seniority") or DEFAULT_SEARCH_SENIORITY
+    keywords = candidate.get("search_keywords") or DEFAULT_SEARCH_KEYWORDS
+    return f'site:{domain} ({seniority}) ({keywords})'
 
 SCORE_PROMPT = """You are evaluating job postings for a candidate. Output ONLY a JSON array, no other text.
 
@@ -140,7 +146,9 @@ def _fetch_links(tf: TinyFish, urls: list[str]) -> dict[str, list[str]]:
     return result
 
 
-def discover_job_urls(tf: TinyFish, company: dict, seen_urls: set) -> list[dict]:
+def discover_job_urls(
+    tf: TinyFish, company: dict, seen_urls: set, candidate: dict | None = None
+) -> list[dict]:
     found_urls: set[str] = set()
 
     logger.debug(f"  [{company['name']}] Fetching careers page: {company['careers_url']}")
@@ -163,7 +171,7 @@ def discover_job_urls(tf: TinyFish, company: dict, seen_urls: set) -> list[dict]
                         ats_jobs += 1
             logger.debug(f"  [{company['name']}] ATS expansion: {ats_jobs} additional job links")
 
-    query = SEARCH_QUERY.format(domain=company["search_domain"])
+    query = build_search_query(company["search_domain"], candidate or {})
     logger.debug(f"  [{company['name']}] Search query: {query}")
     for attempt in range(2):
         try:
@@ -373,7 +381,7 @@ def run_scan(config: dict, companies: list[dict]) -> None:
     for idx, company in enumerate(companies, 1):
         logger.info(f"[{idx}/{total}] Scanning {company['name']}...")
         try:
-            new_jobs = discover_job_urls(tf, company, seen_urls)
+            new_jobs = discover_job_urls(tf, company, seen_urls, config.get("candidate", {}))
             if not new_jobs:
                 logger.info("  No new job URLs found")
                 companies_scanned += 1

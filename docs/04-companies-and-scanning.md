@@ -31,7 +31,9 @@ faster.
 
 1. **Discover** — fetch `careers_url`, extract direct job links + ATS listing pages
    (Greenhouse, Lever, Workday, SmartRecruiters, Ashby), then expand ATS pages. Also
-   runs a `site:<search_domain>` query for senior/staff ML/AI roles.
+   runs a `site:<search_domain>` query built from `candidate.search_seniority` /
+   `search_keywords` (defaults to senior/staff ML/AI roles if unset) — see
+   [07 — Config & scoring](07-config-and-scoring.md).
 2. **Deduplicate** — URLs already seen (tracked in `state/seen_jobs.json`) are skipped,
    so each scan surfaces only *new* postings.
 3. **Fetch details** — pull each job page's content (first ~3000 chars).

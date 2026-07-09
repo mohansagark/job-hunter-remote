@@ -9,6 +9,19 @@ reconstructed from git history.
 
 ## [Unreleased]
 
+## [0.4.4] — 2026-07-09
+
+### Added
+- Job discovery search query is now config-driven: `candidate.search_seniority`
+  / `candidate.search_keywords` in `config.json` shape the `site:<domain>`
+  query sent to TinyFish per company. Empty/absent falls back to the previous
+  hardcoded senior/staff ML/DS terms, so existing configs behave identically.
+  Closes #24.
+
+### Fixed
+- `job_hunt/__init__.py` `__version__` re-synced with `pyproject.toml` (had
+  drifted to a stale `0.4.1` across the last two releases).
+
 ## [0.4.3] — 2026-07-05
 
 ### Added

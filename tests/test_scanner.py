@@ -25,6 +25,34 @@ def test_is_ats_listing():
     assert not scanner.is_ats_listing("https://x.co/careers")
 
 
+def test_build_search_query_defaults():
+    expected = (
+        'site:x.co (senior OR staff OR principal OR lead) '
+        '("data scientist" OR "ML engineer" OR "machine learning engineer" '
+        'OR "AI engineer" OR MLOps OR "deep learning")'
+    )
+    assert scanner.build_search_query("x.co", {}) == expected
+
+
+def test_build_search_query_empty_string_fields_fall_back_to_defaults():
+    same_as_absent = scanner.build_search_query("x.co", {})
+    out = scanner.build_search_query(
+        "x.co", {"search_seniority": "", "search_keywords": ""}
+    )
+    assert out == same_as_absent
+
+
+def test_build_search_query_custom_fields():
+    out = scanner.build_search_query(
+        "x.co",
+        {
+            "search_seniority": "junior OR entry",
+            "search_keywords": '"full stack developer" OR "react developer"',
+        },
+    )
+    assert out == 'site:x.co (junior OR entry) ("full stack developer" OR "react developer")'
+
+
 def test_build_candidate_profile():
     cfg = {"candidate": {"name": "Ada", "profile": "ML eng", "seeking": "remote",
                          "not_suitable": "junior"}}
@@ -140,7 +168,7 @@ def scan_setup(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     (tmp_path / "resume.md").write_text("Senior ML engineer, 10 YOE.")
     monkeypatch.setattr(scanner, "TinyFish", lambda **_: object())
-    monkeypatch.setattr(scanner, "discover_job_urls", lambda tf, co, seen: [
+    monkeypatch.setattr(scanner, "discover_job_urls", lambda tf, co, seen, cand=None: [
         {"url": "https://x.co/jobs/1", "title": "MLE", "company": co["name"],
          "location": co["location"], "region": co["region"]}])
     monkeypatch.setattr(scanner, "fetch_job_details", lambda tf, jobs: jobs)

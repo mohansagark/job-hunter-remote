@@ -25,11 +25,25 @@ The scoring quality depends on this section — the LLM reads it plus your full 
     "profile": "8 YOE ML Engineer. Python, LLMs, AWS, MLOps.",
     "seeking": "Remote EU or NA roles, open to relocation",   // positive signal — scores higher
     "not_suitable": "Junior roles, pure front-end, no-ML SWE", // negative filter — scores lower
+    "search_seniority": "junior OR entry OR associate",
+    //                   ↑ optional — drives job DISCOVERY (the search query itself),
+    //                     not scoring. Empty/absent falls back to "senior OR staff
+    //                     OR principal OR lead".
+    "search_keywords": "\"full stack developer\" OR \"react developer\"",
+    //                  ↑ optional — same discovery mechanism. Empty/absent falls back
+    //                    to the default ML/DS role terms below.
     "min_score": 65,   // jobs below this are not saved or drafted
     "top_n": 5         // how many top matches go in the Telegram notification
   }
 }
 ```
+
+`profile` / `seeking` / `not_suitable` only affect **scoring** (how a discovered job
+is judged) — they never change what gets searched for. `search_seniority` /
+`search_keywords` are the only fields that shape **discovery** (the `site:` search
+query sent to TinyFish). If your profile doesn't match the default senior ML/DS
+search terms, set these two fields or you'll mostly discover jobs that can't score
+well regardless of your resume.
 
 ## Your resume
 

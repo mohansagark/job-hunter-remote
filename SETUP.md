@@ -248,11 +248,23 @@ Open `config.json` and fill in the `candidate` section. Here's what each field c
     //          ↑ positive signal — jobs matching this score higher
     "not_suitable": "Junior roles, pure front-end, no-ML SWE",
     //               ↑ negative filter — jobs matching this score lower
+    "search_seniority": "junior OR entry OR associate",
+    //                   ↑ optional — shapes job DISCOVERY (the search query itself),
+    //                     not scoring. Empty/absent falls back to
+    //                     "senior OR staff OR principal OR lead".
+    "search_keywords": "\"full stack developer\" OR \"react developer\"",
+    //                  ↑ optional — same discovery mechanism. Empty/absent falls
+    //                    back to the default ML/DS role terms.
     "min_score": 65,   // jobs below this threshold are not saved or drafted
     "top_n": 5         // how many top matches to include in Telegram notification
   }
 }
 ```
+
+> `profile` / `seeking` / `not_suitable` only affect scoring — they never change what
+> gets searched for. If your profile doesn't match the default senior ML/DS search
+> terms, set `search_seniority` / `search_keywords` too, or discovery keeps finding
+> jobs that can't score well regardless of your resume.
 
 > [!WARNING]
 > `config.json` is gitignored — it will **never** be accidentally committed to git.
