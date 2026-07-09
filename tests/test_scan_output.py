@@ -19,7 +19,7 @@ def scan_env(tmp_path, monkeypatch):
     # Stub the whole discovery/fetch/score pipeline so the test is deterministic
     # and makes no network or LLM calls.
     monkeypatch.setattr(scanner, "TinyFish", lambda **_: object())
-    monkeypatch.setattr(scanner, "discover_job_urls", lambda tf, co, seen: [
+    monkeypatch.setattr(scanner, "discover_job_urls", lambda tf, co, seen, cand=None: [
         {"url": "https://x.co/jobs/1", "title": "ML Engineer",
          "company": co["name"], "location": co["location"], "region": co["region"]},
     ])

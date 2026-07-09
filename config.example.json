@@ -22,6 +22,8 @@
     "seeking": "Remote-friendly or relocation to EU / NA / APAC",
     "not_suitable": "Junior roles, pure SWE with no ML, non-technical management",
     "relocation_note": "",
+    "search_seniority": "",
+    "search_keywords": "",
     "min_score": 60,
     "top_n": 5
   }
