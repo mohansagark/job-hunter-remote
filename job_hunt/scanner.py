@@ -17,6 +17,32 @@ STATE_FILE = Path("state/seen_jobs.json")
 LAST_SCAN_FILE = Path("state/last_scan.json")
 JOB_HISTORY_FILE = Path("state/job_history.json")
 
+
+def _dedupe_key(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", (s or "").lower())
+
+
+def dedupe_scored_jobs(jobs: list[dict]) -> tuple[list[dict], int]:
+    """Collapse duplicates by (employer, title). Keeps highest-scoring copy,
+    appends other sources to `also_seen_on`. Falls back to URL if employer
+    missing. Returns (deduped_list, dropped_count)."""
+    kept: dict[tuple, dict] = {}
+    for j in jobs:
+        emp = _dedupe_key(j.get("extracted_employer") or "")
+        title = _dedupe_key(j.get("extracted_title") or j.get("title", ""))
+        key = (emp, title) if emp else ("url", j.get("url", ""))
+        prev = kept.get(key)
+        if prev is None:
+            j.setdefault("also_seen_on", [])
+            kept[key] = j
+        else:
+            winner, loser = (j, prev) if j.get("score", 0) > prev.get("score", 0) else (prev, j)
+            src = loser.get("source_board") or loser.get("company") or ""
+            if src and src not in winner.get("also_seen_on", []) and src != winner.get("source_board"):
+                winner.setdefault("also_seen_on", []).append(src)
+            kept[key] = winner
+    return list(kept.values()), len(jobs) - len(kept)
+
 JOB_URL_RE = re.compile(
     r"/(job|jobs|opening|openings|position|positions|vacancy|vacancies|role|roles|apply)"
     r"/[a-zA-Z0-9_%@.-]{4,}",
@@ -63,6 +89,7 @@ For each job output:
 {{
   "job_number": 1,
   "score": 0-100,
+  "employer": "actual hiring company name parsed from the job description (NOT the job board or aggregator like RemoteOK/Wellfound/Himalayas — the real employer). If the JD does not name an employer, return \"\".",
   "title": "extracted job title",
   "stack": "key tech from JD (comma-separated, max 6 items)",
   "location_remote": "location + remote policy",
@@ -281,10 +308,14 @@ def score_jobs(jobs: list[dict], resume: str, config: dict) -> list[dict]:
         idx = item.get("job_number", 0) - 1
         if 0 <= idx < len(jobs):
             job = jobs[idx].copy()
+            employer = (item.get("employer") or "").strip()
             job.update(
                 {
                     "score": score,
                     "extracted_title": title,
+                    "extracted_employer": employer,
+                    "source_board": job["company"],
+                    "company": employer or job["company"],
                     "stack": item.get("stack", ""),
                     "location_remote": item.get("location_remote", job["location"]),
                     "reason": reason,
@@ -418,6 +449,12 @@ def run_scan(config: dict, companies: list[dict]) -> None:
             errors.append(msg)
             logger.error(f"  Company scan failed: {company_err}")
             continue
+
+    if all_scored_jobs:
+        pre = len(all_scored_jobs)
+        all_scored_jobs, dropped = dedupe_scored_jobs(all_scored_jobs)
+        if dropped:
+            logger.info(f"Dedup: collapsed {dropped} duplicate posting(s) across aggregators — {pre} → {len(all_scored_jobs)} unique roles")
 
     state["seen_urls"] = list(seen_urls)
     state["last_scan"] = datetime.now(timezone.utc).isoformat()

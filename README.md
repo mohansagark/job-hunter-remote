@@ -1,10 +1,49 @@
-# autopilot-jobhunt
+# autopilot-jobhunt — remote-only fork
+
+> **Fork of [tarunlnmiit/autopilot-jobhunt](https://github.com/tarunlnmiit/autopilot-jobhunt).**
+> This variant scans **remote-job aggregator sites** (RemoteOK, WeWorkRemotely, Remotive, Himalayas, and 6 others) instead of individual company careers pages — the fastest path to a nightly digest of *fully remote* roles worldwide.
+>
+> Full credit and thanks to the original author. If you want the general-purpose tool that scans individual company careers pages, use the upstream repo. If you're **specifically searching for 100% remote roles from anywhere on the planet**, this fork is for you.
+
+## What's different in this fork
+
+- **`companies.json` ships with 10 curated remote-job aggregators** (see the table below) instead of ~140 company careers pages. Add or remove aggregators to taste.
+- **LLM-extracted employer name.** The scoring prompt now also asks the LLM to parse the *actual hiring company* out of each aggregator listing — since "RemoteOK" or "Remotive" is not who's hiring, it's just the board where the role was found. The real employer shows up in the CSV/Telegram output; the aggregator is recorded as `source_board`.
+- **Cross-aggregator deduplication.** The same job posted on RemoteOK + Remotive + Himalayas is now collapsed to a single row after scoring, keyed on `(employer, title)`. The highest-scoring copy wins; other boards are recorded in `also_seen_on`. Look for `Dedup: collapsed N duplicate posting(s)` in the scan log.
+- Everything else (LLM scoring pipeline, cover-letter/resume drafting, Telegram, MCP integration, cron) works identically to upstream — see [SETUP.md](SETUP.md).
+
+### The 10 aggregators shipped by default
+
+| Aggregator | Domain | Notes |
+|---|---|---|
+| RemoteOK | remoteok.com | General, high-volume |
+| We Work Remotely | weworkremotely.com | General, US-friendly |
+| Remotive | remotive.com | Strong tech + design coverage |
+| Remote.co | remote.co | Curated |
+| Working Nomads | workingnomads.com | General |
+| JustRemote | justremote.co | Filterable by role |
+| Himalayas | himalayas.app | Excellent India/APAC-friendly coverage |
+| NoDesk | nodesk.co | Curated, high-signal |
+| 4 Day Week | 4dayweek.io | 4-day-workweek employers only |
+| Remote First Jobs | remotefirstjobs.com | Remote-first companies |
+
+**Wellfound / AngelList** was intentionally left out — its listing URLs are JavaScript-rendered category pages that don't yield clean employer/title extraction. If you know a scraping-friendly path, PRs welcome.
+
+### Tune it for your role type
+
+The aggregators are role-agnostic. The tool uses your `candidate.search_seniority` and `candidate.search_keywords` in `config.json` to shape the `site:<aggregator>` search query. Examples:
+
+- **Senior backend engineer:** `search_seniority: "Senior OR Staff OR Lead OR Principal"` + `search_keywords: "\"Backend Engineer\" OR \"Software Engineer\" OR Java OR \"Spring Boot\" OR Microservices OR Kafka"`
+- **Marketing leadership:** `search_seniority: "CMO OR VP OR Director OR Head OR Chief"` + `search_keywords: "Marketing OR Growth OR \"Demand Generation\" OR \"Product Marketing\""`
+- **Product designer:** `search_seniority: "Senior OR Staff OR Lead OR Principal"` + `search_keywords: "\"Product Designer\" OR \"UX Designer\" OR \"Design Lead\""`
+
+---
 
 <!-- mcp-name: io.github.tarunlnmiit/autopilot-jobhunt -->
 
 **Your AI job agent. Finds, scores, and drafts applications — while you sleep.**
 
-> Scans 130+ company careers pages nightly → scores every role against your resume with an LLM → sends you the top matches on Telegram → drafts a tailored resume + cover letter on demand.
+> Scans curated remote-job aggregators nightly → scores every role against your resume with an LLM → sends you the top matches on Telegram → drafts a tailored resume + cover letter on demand.
 >
 > 🔒 **Drafts only — never applies.** You review every draft and submit applications yourself. See [PRIVACY.md](PRIVACY.md) for exactly what data leaves your machine.
 
@@ -26,7 +65,7 @@ Published on [PyPI](https://pypi.org/project/autopilot-jobhunt/) and listed on t
 **[📖 Full setup guide with Claude Code MCP integration → SETUP.md](SETUP.md)**
 
 > ### ⭐ Star this repo if it helps you land a job
-> This tool is free, open source, and runs entirely on your machine — no subscription, no credit card. The only "payment" I ask: **if it surfaces a role you apply to (or land), drop a star.** It takes one click, costs you nothing, and it's the single thing that pushes the project in front of the next person grinding through 130 careers pages by hand. **[⭐ Star it here →](https://github.com/tarunlnmiit/autopilot-jobhunt/stargazers)**
+> This tool is free, open source, and runs entirely on your machine — no subscription, no credit card. The only "payment" the upstream author asks: **if it surfaces a role you apply to (or land), drop a star on the [upstream repo](https://github.com/tarunlnmiit/autopilot-jobhunt/stargazers).** All of the LLM-scoring machinery is theirs — this fork just swaps the target list for remote-job aggregators.
 
 ---
 
@@ -34,11 +73,13 @@ Published on [PyPI](https://pypi.org/project/autopilot-jobhunt/) and listed on t
 
 ```mermaid
 flowchart LR
-    A["🌐 130+ Careers Pages"] -->|TinyFish API| B["Job Discovery"]
-    B --> C["LLM Batch Scorer\n(0–100 fit score)"]
-    C -->|score ≥ min| D["📱 Telegram Alert\nTop N matches"]
-    C -->|on demand| E["✉️ Cover Letter\n+ Resume Bullets"]
-    C --> F["📊 CSV Export"]
+    A["🌐 10 Remote-Job Aggregators"] -->|TinyFish API| B["Job Discovery"]
+    B --> B2["LLM Extract\n(employer, title)"]
+    B2 --> C["LLM Batch Scorer\n(0–100 fit score)"]
+    C --> D2["Dedupe by\n(employer, title)"]
+    D2 -->|score ≥ min| D["📱 Telegram Alert\nTop N matches"]
+    D2 -->|on demand| E["✉️ Cover Letter\n+ Resume Bullets"]
+    D2 --> F["📊 CSV Export"]
 ```
 
 **The scoring prompt uses your actual resume** — not keywords. The LLM reads your full work history and the job description, then explains in one sentence why you fit or don't. No more guessing.
