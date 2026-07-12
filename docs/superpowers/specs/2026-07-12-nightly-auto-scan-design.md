@@ -1,7 +1,7 @@
 # Design: Nightly auto job-scan sourced from live portfolio data
 
 **Date:** 2026-07-12
-**Repo:** `autopilot-jobhunt` (fork `avinashgenaipeople/autopilot-jobhunt`)
+**Repo:** `mohansagark/job-hunter-remote` (derived from `avinashgenaipeople/autopilot-jobhunt`, now upstream)
 **Owner:** Mohan Sagar Killamsetty
 
 ## Goal
@@ -25,7 +25,7 @@ Telegram. Failures also notify Telegram.
 
 | Repo | Role | Visibility |
 |---|---|---|
-| `avinashgenaipeople/autopilot-jobhunt` (this fork) | runs the scan + workflow | public |
+| `mohansagark/job-hunter-remote` (your repo) | runs the scan + workflow | public |
 | `mohansagark/portfolio-data` | source of truth for profile/skills (`data/*.json`) | public |
 
 Both public → the Actions job checks out `portfolio-data` with no token, and the public
@@ -92,7 +92,7 @@ Coarse board search vs. fine LLM scoring:
   - `seeking`: "Fully remote, able to work from India (IST); global-remote OK; strong compensation"
   - `not_suitable`: "on-site/hybrid; remote roles geo-restricted to countries that exclude India"
   - No role-type exclusions (skills-match + pay is the bar).
-- `min_score: 60`, `top_n: 8`.
+- `min_score: 60`, `top_n: 20`.
 - `llm_provider: openrouter`; key fields are placeholders overridden by env/secrets at runtime.
 - `candidate.name` / `candidate.profile` are filled by `job_hunt/profile_sync.py` at run time.
 
@@ -112,11 +112,11 @@ TinyFish key already held.
 
 ## GitHub migration + Actions (Phase B)
 
-**Secrets** (fork → Settings → Secrets and variables → Actions) — no resume secret; the
+**Secrets** (repo → Settings → Secrets and variables → Actions) — no resume secret; the
 resume is generated:
 `TINYFISH_API_KEY`, `OPENROUTER_API_KEY`, `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID`.
 
-**Enable Actions** on the fork (Actions tab → enable), since forks disable scheduled
+**Enable Actions** on the repo (Actions tab → enable)
 workflows by default.
 
 **Workflow `.github/workflows/nightly-scan.yml`:**
