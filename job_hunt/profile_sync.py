@@ -12,7 +12,6 @@ runs against a stale or empty profile.
 """
 import argparse
 import json
-import sys
 from pathlib import Path
 
 # The data files this adapter depends on, relative to <src>/data/.
