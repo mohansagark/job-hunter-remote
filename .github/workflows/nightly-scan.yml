@@ -3,7 +3,7 @@ name: nightly-scan
 # Runs the job scan on GitHub's clock instead of a local cron, so it fires even
 # when the laptop is asleep. The candidate profile is rebuilt from the live
 # portfolio-data repo each run (latest skills), jobs are scored with OpenRouter
-# (claude_cli can't run in CI — no Claude login on the runner), top matches go to
+# (claude_cli can't run in CI - no Claude login on the runner), top matches go to
 # Telegram, and last_scan.json is committed back so `autopilot draft N` works
 # locally after `git pull`. Any failure pings Telegram with the run link.
 
@@ -27,7 +27,7 @@ jobs:
       - name: Checkout job-hunt
         uses: actions/checkout@v4
 
-      - name: Checkout portfolio-data (public — source of truth for profile)
+      - name: Checkout portfolio-data (public - source of truth for profile)
         uses: actions/checkout@v4
         with:
           repository: mohansagark/portfolio-data
@@ -70,6 +70,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          CROSS=$(printf '\xe2\x9d\x8c')   # ❌ emoji, kept out of the YAML to stay ASCII
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
-            --data-urlencode text="❌ Run failed for $(date -u +%F). Logs: ${RUN_URL}" >/dev/null
+            --data-urlencode text="${CROSS} Run failed for $(date -u +%F). Logs: ${RUN_URL}" >/dev/null
