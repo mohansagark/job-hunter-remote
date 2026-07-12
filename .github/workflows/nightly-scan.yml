@@ -1,0 +1,75 @@
+name: nightly-scan
+
+# Runs the job scan on GitHub's clock instead of a local cron, so it fires even
+# when the laptop is asleep. The candidate profile is rebuilt from the live
+# portfolio-data repo each run (latest skills), jobs are scored with OpenRouter
+# (claude_cli can't run in CI — no Claude login on the runner), top matches go to
+# Telegram, and last_scan.json is committed back so `autopilot draft N` works
+# locally after `git pull`. Any failure pings Telegram with the run link.
+
+on:
+  schedule:
+    - cron: "0 21 * * *"   # 21:00 UTC = 02:30 IST (UTC+5:30)
+  workflow_dispatch: {}      # manual "Run workflow" button for testing
+
+permissions:
+  contents: write            # commit last_scan.json back to the repo
+
+concurrency:
+  group: nightly-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150     # TinyFish board scan is 30-90 min; headroom
+    steps:
+      - name: Checkout job-hunt
+        uses: actions/checkout@v4
+
+      - name: Checkout portfolio-data (public — source of truth for profile)
+        uses: actions/checkout@v4
+        with:
+          repository: mohansagark/portfolio-data
+          path: portfolio-data
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install autopilot
+        run: pip install -e .
+
+      - name: Build config + sync profile from portfolio-data
+        run: |
+          cp config.actions.json config.json
+          python -m job_hunt.profile_sync --src portfolio-data
+
+      - name: Run scan
+        env:
+          TINYFISH_API_KEY: ${{ secrets.TINYFISH_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          LLM_PROVIDER: openrouter
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: autopilot scan
+
+      - name: Commit scan state
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f state/last_scan.json 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "chore: nightly scan state $(date -u +%F) [skip ci]"
+          git push || true
+
+      - name: Notify Telegram on failure
+        if: failure()
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            --data-urlencode text="❌ Run failed for $(date -u +%F). Logs: ${RUN_URL}" >/dev/null

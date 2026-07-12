@@ -1,0 +1,27 @@
+{
+  "tinyfish_api_key": "YOUR_TINYFISH_API_KEY",
+  "llm_provider": "openrouter",
+  "openrouter_api_key": "YOUR_OPENROUTER_API_KEY",
+  "openrouter_model": "meta-llama/llama-3.3-70b-instruct:free",
+  "openrouter_fallback_models": [
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "google/gemma-4-31b-it:free",
+    "qwen/qwen3-coder:free"
+  ],
+  "telegram": {
+    "token": "YOUR_TELEGRAM_BOT_TOKEN",
+    "chat_id": "YOUR_TELEGRAM_CHAT_ID"
+  },
+  "candidate": {
+    "name": "Filled by profile_sync from portfolio-data",
+    "resume_path": "resume/YOUR_RESUME.md",
+    "profile": "Filled by profile_sync from portfolio-data",
+    "seeking": "Fully remote, able to work from India (IST); global-remote roles OK; strong compensation",
+    "not_suitable": "On-site or hybrid roles; remote roles geo-restricted to countries that exclude India",
+    "relocation_note": "",
+    "search_seniority": "senior OR staff OR lead OR principal",
+    "search_keywords": "\"AI engineer\" OR LLM OR \"machine learning\" OR \"frontend engineer\" OR \"frontend developer\" OR \"full stack\" OR React OR \"Next.js\" OR \"React Native\" OR \"software engineer\"",
+    "min_score": 60,
+    "top_n": 8
+  }
+}

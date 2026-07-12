@@ -48,7 +48,7 @@ The local `portfolio-data` clone lives at `/Users/mohansagar/Documents/portfolio
 portfolio-data (GitHub, public)  ── source of truth: data/*.json
         │  local path (dev)  |  actions/checkout (CI)
         ▼
-scripts/sync_profile.py   (NEW adapter)
+job_hunt/profile_sync.py   (NEW adapter, run as: python -m job_hunt.profile_sync)
         │   writes  → resume/YOUR_RESUME.md      (fresh markdown from JSON)
         │   patches → config.json candidate.{name,profile}
         ▼
@@ -60,7 +60,7 @@ Telegram push (top N, score ≥ min)   +   commit state/last_scan.json back
 (on failure)  →  Telegram: "❌ Run failed for {DATE}"  + Actions run link
 ```
 
-## Component: `scripts/sync_profile.py` (new, ~60 lines)
+## Component: `job_hunt/profile_sync.py` (new, ~60 lines)
 
 - **Input:** `--src <path>` to a `portfolio-data` checkout (local path in dev; the
   checked-out `portfolio-data/` dir in CI). Optionally `--config` (default `config.json`)
@@ -94,7 +94,7 @@ Coarse board search vs. fine LLM scoring:
   - No role-type exclusions (skills-match + pay is the bar).
 - `min_score: 60`, `top_n: 8`.
 - `llm_provider: openrouter`; key fields are placeholders overridden by env/secrets at runtime.
-- `candidate.name` / `candidate.profile` are filled by `sync_profile.py` at run time.
+- `candidate.name` / `candidate.profile` are filled by `job_hunt/profile_sync.py` at run time.
 
 ## Local verification (Phase A — run from fork root)
 
@@ -102,7 +102,7 @@ Coarse board search vs. fine LLM scoring:
 2. Create `.env` with: `TINYFISH_API_KEY`, `OPENROUTER_API_KEY`, `TELEGRAM_TOKEN`,
    `TELEGRAM_CHAT_ID`, `LLM_PROVIDER=openrouter`.
 3. `cp config.actions.json config.json`
-4. `python scripts/sync_profile.py --src ../../portfolio-data` → generates resume + profile.
+4. `python -m job_hunt.profile_sync --src ../../portfolio-data` → generates resume + profile.
 5. `autopilot scan` → confirm a Telegram message arrives with scored jobs.
 6. Only once green → proceed to GitHub.
 
@@ -128,7 +128,7 @@ workflows by default.
   3. `actions/setup-python` (3.13)
   4. `pip install -e .`
   5. `cp config.actions.json config.json` (must precede sync — sync patches config.json in place)
-  6. `python scripts/sync_profile.py --src portfolio-data`
+  6. `python -m job_hunt.profile_sync --src portfolio-data`
   7. `autopilot scan` (env: the 4 secrets + `LLM_PROVIDER=openrouter`)
   8. `if: always()` — commit `state/last_scan.json` back with `[skip ci]`
   9. `if: failure()` — send Telegram `❌ Run failed for $(date -u +%F)` with a link to the
@@ -154,7 +154,7 @@ workflows by default.
 
 ## Files created / changed
 
-- NEW `scripts/sync_profile.py` (+ test)
+- NEW `job_hunt/profile_sync.py` (+ test)
 - NEW `config.actions.json` (revise the earlier draft: add search config; profile filled at runtime)
 - NEW `.github/workflows/nightly-scan.yml` (revise the earlier draft: add portfolio checkout + sync step + failure-notify step; drop the RESUME_MD secret/heredoc)
 - NEW `docs/superpowers/specs/2026-07-12-nightly-auto-scan-design.md` (this file)
