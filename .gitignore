@@ -8,6 +8,8 @@ venv/
 
 # Secrets — NEVER commit
 .env
+.env.*
+!.env.example
 config.json
 
 # Runtime state — personal data

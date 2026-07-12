@@ -22,6 +22,6 @@
     "search_seniority": "senior OR staff OR lead OR principal",
     "search_keywords": "\"AI engineer\" OR LLM OR \"machine learning\" OR \"frontend engineer\" OR \"frontend developer\" OR \"full stack\" OR React OR \"Next.js\" OR \"React Native\" OR \"software engineer\"",
     "min_score": 60,
-    "top_n": 8
+    "top_n": 20
   }
 }
