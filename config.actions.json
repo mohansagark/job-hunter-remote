@@ -20,7 +20,7 @@
     "not_suitable": "On-site or hybrid roles; remote roles geo-restricted to countries that exclude India",
     "relocation_note": "",
     "search_seniority": "senior OR staff OR lead OR principal",
-    "search_keywords": "\"AI engineer\" OR LLM OR \"machine learning\" OR \"frontend engineer\" OR \"frontend developer\" OR \"full stack\" OR React OR \"Next.js\" OR \"React Native\" OR \"software engineer\"",
+    "search_keywords": "\"AI engineer\" OR LLM OR \"frontend engineer\" OR \"frontend developer\" OR \"React\" OR \"Next.js\" OR \"LLM Integration\" OR \"Generative AI\"",
     "min_score": 60,
     "top_n": 20
   }
