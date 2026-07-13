@@ -94,11 +94,19 @@ For each job output:
   "stack": "key tech from JD (comma-separated, max 6 items)",
   "location_remote": "location + remote policy",
   "reason": "one sentence why this fits or doesn't fit the candidate",
+  "india_doable": true/false,
+  "has_required_skills": true/false,
+  "role_matches": true/false,
   "worth_applying": true/false
 }}
 
+Hard constraints (judge each independently and honestly):
+- india_doable: true ONLY if the role can be performed remotely from India (IST-compatible or async). Set FALSE if it is restricted to a region/country that excludes India (e.g. "Remote (US)", "US-only", "EU only", "must reside in <place>"), requires relocation, or requires in-country work authorization. Plain "Remote"/"Remote (global)" with no geographic restriction is true.
+- has_required_skills: true ONLY if the job's PRIMARY/must-have skills are ones the candidate has per the resume. Set FALSE if a core requirement is a language or stack the candidate lacks (e.g. Go, Rust, Java, C++, Scala, .NET). Nice-to-have skills do NOT count against this.
+- role_matches: true ONLY if the role is AI/ML engineering, AI-driven/GenAI frontend, or frontend. Set FALSE for pure backend, full-stack without an AI or frontend focus, data/ML-ops, SRE/DevOps, non-React mobile, or management.
+
 Scoring: 80-100 near-perfect; 60-79 good fit; 40-59 partial; <40 poor.
-Set worth_applying=true only if score >= {min_score}.
+Set worth_applying=true only if score >= {min_score} AND india_doable AND has_required_skills AND role_matches.
 Include ALL jobs. Output ONLY the JSON array."""
 
 EXPORT_FIELDS = [
@@ -256,6 +264,19 @@ def fetch_job_details(tf: TinyFish, jobs: list[dict]) -> list[dict]:
     return enriched
 
 
+def _hard_flag(item: dict, key: str, label: str) -> bool:
+    """Read a hard-constraint boolean from a scored item.
+
+    Missing field -> True (fail-open) with a warning, so one malformed field can't
+    suppress every match; the min_score threshold remains the backstop.
+    """
+    v = item.get(key)
+    if v is None:
+        logger.warning(f"    scored job '{label[:40]}' missing '{key}' — defaulting to eligible")
+        return True
+    return bool(v)
+
+
 def score_jobs(jobs: list[dict], resume: str, config: dict) -> list[dict]:
     if not jobs:
         return []
@@ -301,9 +322,20 @@ def score_jobs(jobs: list[dict], resume: str, config: dict) -> list[dict]:
         score = item.get("score", 0)
         title = item.get("title", "?")
         reason = item.get("reason", "")
-        worth = item.get("worth_applying", False)
-        logger.debug(f"    [{score:3d}] {title} — {reason[:80]}")
-        if not worth:
+        india_doable = _hard_flag(item, "india_doable", title)
+        has_required_skills = _hard_flag(item, "has_required_skills", title)
+        role_matches = _hard_flag(item, "role_matches", title)
+        eligible = india_doable and has_required_skills and role_matches
+
+        logger.debug(
+            f"    [{score:3d}] {title} — india={india_doable} "
+            f"skills={has_required_skills} role={role_matches} — {reason[:60]}"
+        )
+
+        # Deterministic gate: score threshold AND all hard constraints. A job that
+        # is geo-restricted, needs a skill the candidate lacks, or is off-target is
+        # dropped regardless of its numeric score.
+        if score < min_score or not eligible:
             continue
         idx = item.get("job_number", 0) - 1
         if 0 <= idx < len(jobs):
@@ -319,6 +351,9 @@ def score_jobs(jobs: list[dict], resume: str, config: dict) -> list[dict]:
                     "stack": item.get("stack", ""),
                     "location_remote": item.get("location_remote", job["location"]),
                     "reason": reason,
+                    "india_doable": india_doable,
+                    "has_required_skills": has_required_skills,
+                    "role_matches": role_matches,
                 }
             )
             results.append(job)

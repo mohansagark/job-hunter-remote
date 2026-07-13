@@ -108,6 +108,53 @@ def test_score_jobs_llm_raises(monkeypatch):
     assert scanner.score_jobs([{"company": "A", "location": "L", "title": "T", "url": "u"}], "r", {}) == []
 
 
+# --- hard-constraint filter -----------------------------------------------------
+
+def _score_one(monkeypatch, extra):
+    """Run score_jobs on a single high-scoring job with the given constraint flags."""
+    jobs = [{"company": "Acme", "location": "Remote", "title": "AI Eng", "url": "u1"}]
+    item = {"job_number": 1, "score": 90, "title": "AI Engineer",
+            "stack": "Python", "reason": "fit", "worth_applying": True}
+    item.update(extra)
+    monkeypatch.setattr(scanner, "chat_with_llm", lambda *a, **k: json.dumps([item]))
+    return scanner.score_jobs(jobs, "resume", {"candidate": {"min_score": 60}})
+
+
+def test_score_jobs_keeps_fully_eligible(monkeypatch):
+    out = _score_one(monkeypatch, {"india_doable": True, "has_required_skills": True,
+                                    "role_matches": True})
+    assert len(out) == 1
+    assert out[0]["india_doable"] and out[0]["has_required_skills"] and out[0]["role_matches"]
+
+
+def test_score_jobs_drops_geo_restricted(monkeypatch):
+    out = _score_one(monkeypatch, {"india_doable": False, "has_required_skills": True,
+                                    "role_matches": True})
+    assert out == []
+
+
+def test_score_jobs_drops_missing_skill(monkeypatch):
+    out = _score_one(monkeypatch, {"india_doable": True, "has_required_skills": False,
+                                    "role_matches": True})
+    assert out == []
+
+
+def test_score_jobs_drops_off_target_role(monkeypatch):
+    out = _score_one(monkeypatch, {"india_doable": True, "has_required_skills": True,
+                                    "role_matches": False})
+    assert out == []
+
+
+def test_score_jobs_fail_open_on_missing_booleans(monkeypatch):
+    out = _score_one(monkeypatch, {})
+    assert len(out) == 1
+
+
+def test_score_prompt_requests_hard_constraints():
+    for field in ("india_doable", "has_required_skills", "role_matches"):
+        assert field in scanner.SCORE_PROMPT
+
+
 # --- discover / fetch (fake TinyFish) -----------------------------------------
 
 def _fake_tf(links=None, search_urls=None, contents=None):

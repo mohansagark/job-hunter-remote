@@ -16,12 +16,12 @@
     "name": "Filled by profile_sync from portfolio-data",
     "resume_path": "resume/YOUR_RESUME.md",
     "profile": "Filled by profile_sync from portfolio-data",
-    "seeking": "Fully remote, able to work from India (IST); global-remote roles OK; strong compensation",
-    "not_suitable": "On-site or hybrid roles; remote roles geo-restricted to countries that exclude India",
+    "seeking": "Roles doable remotely from India (IST-compatible or async); globally-remote OK. Target role families ONLY: AI/ML engineering, AI-driven/GenAI frontend, and frontend. Core skills the candidate has: React, Next.js, React Native, TypeScript, JavaScript, Python, Node.js, LLM/GenAI integration.",
+    "not_suitable": "Roles restricted to a region/country excluding India (US-only, EU-only, 'must reside in X'), requiring relocation or in-country work authorization; roles needing a primary skill the candidate lacks (Go, Rust, Java, C++, Scala, .NET); pure backend, non-AI/non-frontend full-stack, data/ML-ops, SRE/DevOps, non-React mobile, or management roles.",
     "relocation_note": "",
     "search_seniority": "senior OR staff OR lead OR principal",
     "search_keywords": "\"AI engineer\" OR LLM OR \"frontend engineer\" OR \"frontend developer\" OR \"React\" OR \"Next.js\" OR \"LLM Integration\" OR \"Generative AI\"",
-    "min_score": 60,
+    "min_score": 75,
     "top_n": 20
   }
 }
