@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "url": "https://www.workingnomads.com/jobs/senior-ai-engineer-lemonio-1734670",
+    "title": "[Remote Job] Senior AI Engineer at Lemon.io | Working Nomads",
+    "snippet": "",
+    "company": "Lemon.io",
+    "location": "Aggregator",
+    "region": "Remote",
+    "content": "# Senior AI Engineer\n\nLemon.io\n\nFull-time\n\nEurope, North America, Latin America, APAC\n\nSenior Level\n\nPosted 10\u00a0hours ago\n\npython\n\nmachine learning\n\narchitecture\n\nsoftware engineering\n\nstartup\n\n\nApply for this position \u2192\n\n\n\n\nAre you a talented Senior AI Engineer/Architect looking for a remote job that lets you show your skills and get decent compensation? Look no further than Lemon.io \u2014 the marketplace that connects you with hand-picked startups in the US and Europe.\n\n**What we offer:**\n\n* The rate depends on your skills and experience. We've already paid out over $11M to our engineers.\n* No more hunting for clients or negotiating rates \u2014 let us handle the business side of things so you can focus on what you do best.\n* We'll manually find the best project for you according to your skills and preferences.\n* Choose a schedule that works best for you. It\u2019s possible to communicate async or minimally overlap within team working hours.\n* We respect your seniority so you can expect no micromanagement or screen trackers.\n* Communicate directly with the clients. Most of them have technical backgrounds. Sounds good, yeah?\n* We will support you from the time you submit the application throughout all cooperation stages.\n* Most of our projects involve working in a fast-paced startup environment. We hope you like it as much as we do.\n* Through our community, we will connect you with the best developers from more than 75 countries.\n\nWe have several AI-related roles; here are some of them.\n\n**Requirements - AI Engineer:**\n\n* 3+ years of commercial experience applying AI to practical technology solutions\n* A solid understanding of Python is a must; experience with other programming languages commonly used in AI is a plus\n* Experience with Vector Databases, Pinecone or Weaviate is required\n* 2+ years of experience with LangChain is mandatory\n* 2+ years of experience with large language models (LLMs) or vLLMs is mandatory\n* 2+ years of experience with RAG or OpenAI is required\n\n**Requirements - AI Agent Architect:**\n\n* 3+ years of experience with Python\n* 3+ years of experience with LLM\n* Experience with Multi-agent systems architecture, AI agent orchestration, AI telemetry is a must.\n\n**Requirements - AI Automation Architect:**\n\n* 1+ year of experience with Workflow Automation and Webhooks\n* 3+ years with SQL is a must\n* Familiarity with AI API integration and Claude Cowork is a must\n* Knowledge of Make.com/n8n/Zapier\n\n**Other requirements:**\n\n* Strong technical skills: as a Senior AI Engineer/Architect, you are expected to be able to create projects from scratch and have a deep understanding of application architecture.\n* Clear and effective communication in English \u2014 advanced ability to discuss business tasks, justify decisions, and communicate issues. Good self-presentation is also essential for upcoming client calls.\n* Strong self-organizational skills \u2014 ability to work full-time remotely with no supervision.\n* Reliability \u2014 we want to trust you and expect that",
+    "score": 85,
+    "extracted_title": "Senior AI Engineer",
+    "extracted_employer": "Lemon.io",
+    "source_board": "Working Nomads",
+    "stack": "Python, Machine Learning, Architecture, Software Engineering, AI",
+    "location_remote": "Remote (global, async possible)",
+    "reason": "Matches candidate's AI/ML engineering focus, Python skills, and remote flexibility.",
+    "india_doable": true,
+    "has_required_skills": true,
+    "role_matches": true,
+    "also_seen_on": [],
+    "scan_date": "2026-07-17"
+  }
+]
