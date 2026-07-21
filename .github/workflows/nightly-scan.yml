@@ -37,11 +37,14 @@ jobs:
       - name: Checkout job-hunt
         uses: actions/checkout@v4
 
-      - name: Checkout portfolio-data (public - source of truth for profile)
+      - name: Checkout portfolio-data (private - source of truth for profile)
         uses: actions/checkout@v4
         with:
           repository: mohansagark/portfolio-data
           path: portfolio-data
+          # portfolio-data is a private repo; the default GITHUB_TOKEN is scoped
+          # to this repo only, so read it via a read-only deploy key instead.
+          ssh-key: ${{ secrets.PORTFOLIO_DATA_DEPLOY_KEY }}
 
       - uses: actions/setup-python@v5
         with:
