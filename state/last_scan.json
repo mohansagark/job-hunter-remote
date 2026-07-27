@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "url": "https://www.workingnomads.com/jobs/staff-ai-engineer-podium-1756165",
+    "title": "[Remote Job] Staff AI Engineer at Podium | Working Nomads",
+    "snippet": "",
+    "company": "Podium",
+    "location": "Aggregator",
+    "region": "Remote",
+    "content": "# Staff AI Engineer\n\nApply for this position \u2192 Go ad-free with Premium\n\nAt Podium, we bring AI Employees to local businesses that turn every conversation into revenue. Trusted by 60,000+ businesses across Auto, Home Services, and Aesthetics, Podium captures and converts leads 24/7, driving both new business and repeat customers.\n\nIn under 24 months, we crossed $100M in AI Agent ARR, scaling 300% year-over-year. During this time, we\u2019ve deployed 10,000 AI employees to empower real business outcomes for our customers. Podium is building what we believe will be the most impactful AI employee ecosystem for local business.\n\nPodium has been recognized as the Best AI Implementation by Inc. Magazine, highlighted by OpenAI for building revenue-driving AI Agents, and awarded the #1 AI Agent for Business Operations by G2.\n\nOur growth is fueled by hiring exceptional people, holding them to high standards, and creating opportunities for them to grow and make an impact. Our operating principles guide daily behavior and ensure we hire people who will thrive at Podium. If you're hungry for growth, aligned to our operating principles, and ready to get to work, you won't find a better place to learn and accelerate your career.\n\nStaff AI Engineer\n\nThe Role\n\nWe are looking for a talented Staff AI Engineer to help build and scale our AI Agent platform\u2014a powerful system that autonomously interacts with customers, handling millions of conversations every month. In this role, you\u2019ll design and deliver the software that enables local businesses to manage complex customer interactions automatically, book more appointments, and serve their customers more effectively across multiple channels (e.g., voice, SMS, chat).\n\nIf you thrive in fast-paced, highly iterative environments, enjoy solving complex distributed systems challenges, and want to see your work drive immediate business impact, this role is for you!\n\nWhat you will be doing\n\n* Build and scale the AI Agent platform \u2014 enabling high-volume, real-time conversational workflows that deliver accuracy and low latency at scale.\n* Design and implement APIs, services, and infrastructure that power multi-turn, cross-channel customer interactions.\n* Own the full lifecycle: architecture, implementation, deployment, and ongoing reliability.\n* Prototype rapidly, iterate with live interaction data, and continuously improve system performance and user experience.\n* Implement observability, monitoring, and operational best practices to ensure reliability in production, focusing on agent accuracy and latency.\n* Collaborate with engineers, product managers, and AI/ML scientists to deliver end-to-end features that power critical business outcomes.\n\nWhat you should have\n\n* 10+ years of professional software engineering experience with at least one modern language such as Go, Python, or Elixir.\n* 1+ years of professional experience deploying and maintaining AI agents in production environments that interact with tools, APIs, or real-world ",
+    "score": 85,
+    "extracted_title": "Staff AI Engineer",
+    "extracted_employer": "Podium",
+    "source_board": "Working Nomads",
+    "stack": "",
+    "location_remote": "Remote (global)",
+    "reason": "Role matches AI engineering, is fully remote with no geographic restriction, and aligns with the candidate's AI and frontend skills.",
+    "india_doable": true,
+    "has_required_skills": true,
+    "role_matches": true,
+    "also_seen_on": [],
+    "scan_date": "2026-07-27"
+  }
+]
