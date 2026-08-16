@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "url": "https://www.workingnomads.com/jobs/principal-ai-engineer-eclinical-solutions",
+    "title": "[Remote Job] Principal AI Engineer at eClinical Solutions | Working Nomads",
+    "snippet": "",
+    "company": "eClinical Solutions",
+    "location": "Aggregator",
+    "region": "Remote",
+    "content": "# Principal AI Engineer\n\nApply for this position \u2192 Go ad-free with Premium\n\neClinical Solutions is transforming clinical development with elluminate\u00ae, our Clinical Data Cloud, helping life sciences organizations unify, analyze, and unlock the value of their data faster than ever before. By combining a modern cloud platform with expert data services, we empower smarter decisions across the clinical trial lifecycle\u2014accelerating innovation that ultimately improves patient outcomes.\n\nOur engineering teams build enterprise-grade, revenue-generating products at the intersection of cloud, data, analytics, and emerging AI technologies. If you\u2019re excited about building sophisticated software that makes a real-world impact on healthcare, this is the place to do it.\n\nYou will make an impact\n\nThe Principal AI Engineer is primarily responsible for the design, implementation, and support of AI-powered and agentic capabilities embedded in the company\u2019s elluminate software platform. These capabilities facilitate our clients\u2019 work on clinical trials. The Principal AI Engineer will need strong analytical and technical skills to design and build production-grade solutions using Large Language Models (LLMs), agentic frameworks, and modern Deep Learning (DL) and Machine Learning (ML) techniques in close collaboration with the company\u2019s business clients. In addition, the candidate must serve as a Subject Matter Expert on the application of LLMs, agentic AI, and DL/ML to healthcare structured and unstructured data, both internally and with the company\u2019s partners and clients.\n\nYour day to day:\n\n* Actively works with product and engineering to design and build breakthrough AI-powered and agentic capabilities for our clients using LLMs, agentic workflows, and modern DL/ML techniques\n* Design, prototype, develop, and test LLM-powered applications, agentic workflows, and predictive models using Python and modern AI frameworks to power critical product capabilities\n* Work with both structured and unstructured clinical trial data, including patient reports, trial documentation, and free text notes\n* Ideate, design, prototype, and develop solutions such as multi-agent workflows, RAG-based applications, document intelligence and summarization pipelines, and intelligent process automation\n* Design, prototype, and develop solutions using modern AI frameworks and libraries such as LangChain, LangGraph, LlamaIndex, PyTorch, Hugging Face Transformers, and scikit-learn\n* Champion AI-driven development practices across the team \u2014 using AI coding assistants and agentic dev tools to accelerate prototyping, code generation, testing, and review\n* Build and maintain LLM, agentic, and ML pipelines, including prompt engineering, orchestration logic, and evaluation harnesses\n* Apply relevant evaluation frameworks, guardrails, and statistical measures for performance, quality, and error analysis of AI systems\n* Drive the entire workflow of multiple AI engineering projects\n* Enhance the experie",
+    "score": 88,
+    "extracted_title": "Principal AI Engineer",
+    "extracted_employer": "eClinical Solutions",
+    "source_board": "Working Nomads",
+    "stack": "LLMs, Agentic frameworks, Deep Learning, Machine Learning",
+    "location_remote": "Remote (global)",
+    "reason": "Strong match for AI Engineer role requiring LLM/agentic skills that candidate possesses, fully remote.",
+    "india_doable": true,
+    "has_required_skills": true,
+    "role_matches": true,
+    "also_seen_on": [],
+    "scan_date": "2026-08-16"
+  }
+]
