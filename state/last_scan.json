@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "url": "https://www.workingnomads.com/jobs/senior-ai-engineer-typeform",
+    "title": "[Remote Job] Senior Ai Engineer at Typeform | Working Nomads",
+    "snippet": "",
+    "company": "Typeform",
+    "location": "Aggregator",
+    "region": "Remote",
+    "content": "# Senior Ai Engineer\n\nApply for this position \u2192 Go ad-free with Premium\n\n### Who we are\n\nTypeform is a refreshingly different form builder. We help over 150,000 businesses collect the data they need with forms, surveys, and quizzes that people enjoy. Designed to look striking and feel effortless to fill out, Typeform drives 500 million responses every year\u2014and integrates with essential tools like Slack, Zapier, and Hubspot.\n\n### About the team\n\nThe AI Engineering team builds the systems and capabilities behind Typeform\u2019s products.\n\nWe use machine learning, large language models, RAG, and agentic systems to help customers collect, understand, and act on information in more conversational and personalised ways.\n\nThe team owns the journey from experimentation through to production. This includes AI application development, evaluation, infrastructure, deployment, observability, reliability, and performance.\n\nYou will work closely with Product Managers, Software Engineers, Data Scientists, Data Engineers, and Analytics teams to turn promising AI ideas into secure, scalable, and dependable customer experiences.\n\n### About the role\n\nAs a Senior AI Engineer at Typeform, you will design, build, and operate the systems behind our AI products.\n\nYour work will span generative AI applications, enterprise RAG systems, agentic workflows, model evaluation, machine learning pipelines, and the infrastructure required to run them reliably at scale.\n\nThis is a hands on engineering role with strong ownership. You will help turn ideas and prototypes into production systems used by our customers. You will also help define the technical standards for developing, evaluating, deploying, and monitoring AI across Typeform.\n\n### Things you will do\n\n### Build and deliver AI products\n\n* Design, build, and deploy generative AI capabilities across Typeform\u2019s products.\n* Develop applications using large language models, RAG, vector search, and agentic systems.\n* Build services and APIs that allow product teams to integrate AI capabilities into customer experiences.\n* Turn prototypes into reliable production systems with clear measures of performance and quality.\n* Explore new ways for customers to collect, understand, and act on information using AI.\n\n### Build scalable AI systems\n\n* Design and operate machine learning services and workflows using Python, Docker, Kubernetes, and AWS.\n* Build reliable pipelines for batch and real time processing using technologies such as Kafka and Airflow.\n* Design solutions using vector databases to support retrieval, recommendations, personalisation, and semantic search.\n* Use MLflow to manage experiments, model versions, registries, and deployments.\n* Improve the reliability, performance, scalability, and cost efficiency of our AI systems.\n\n### Evaluate and improve AI quality\n\n* Build automated evaluation pipelines for generative AI applications.\n* Develop benchmarks that measure accuracy, relevance, reliability, fairness, latency, and cost.\n*",
+    "score": 88,
+    "extracted_title": "Senior Ai Engineer",
+    "extracted_employer": "Typeform",
+    "source_board": "Working Nomads",
+    "stack": "Generative AI, RAG, Agentic workflows, Model evaluation, ML pipelines, Infrastructure",
+    "location_remote": "Remote (global)",
+    "reason": "Candidate\u2019s expertise in AI/LLM, RAG, agentic workflows and AWS infrastructure aligns closely with the job\u2019s focus on generative AI applications and scalable ML pipelines.",
+    "india_doable": true,
+    "has_required_skills": true,
+    "role_matches": true,
+    "also_seen_on": [],
+    "scan_date": "2026-09-12"
+  }
+]
