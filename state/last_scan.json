@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "url": "https://himalayas.app/companies/lottiefiles/jobs/senior-ai-engineer",
+    "title": "Senior Ai Engineer",
+    "snippet": "",
+    "company": "lottiefiles",
+    "location": "Aggregator (India-friendly)",
+    "region": "Remote",
+    "score": 80,
+    "extracted_title": "Senior Ai Engineer",
+    "extracted_employer": "lottiefiles",
+    "source_board": "Himalayas",
+    "stack": "",
+    "location_remote": "Aggregator (India-friendly)",
+    "reason": "Explicit AI engineer role matches candidate's AI/ML engineering expertise.",
+    "india_doable": true,
+    "has_required_skills": true,
+    "role_matches": true,
+    "also_seen_on": [],
+    "scan_date": "2026-09-19"
+  },
+  {
+    "url": "https://himalayas.app/companies/saas-group/jobs/senior-software-engineer-ai",
+    "title": "Senior Software Engineer Ai",
+    "snippet": "",
+    "company": "saas-group",
+    "location": "Aggregator (India-friendly)",
+    "region": "Remote",
+    "score": 80,
+    "extracted_title": "Senior Software Engineer Ai",
+    "extracted_employer": "saas-group",
+    "source_board": "Himalayas",
+    "stack": "",
+    "location_remote": "Aggregator (India-friendly)",
+    "reason": "Software engineer role with AI focus aligns with candidate's AI engineering and frontend strengths.",
+    "india_doable": true,
+    "has_required_skills": true,
+    "role_matches": true,
+    "also_seen_on": [],
+    "scan_date": "2026-09-19"
+  }
+]
