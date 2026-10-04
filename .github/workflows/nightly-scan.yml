@@ -35,10 +35,10 @@ jobs:
             --data-urlencode text="${GLASS} Nightly job scan started - $(TZ='Asia/Kolkata' date '+%F %H:%M IST')" >/dev/null
 
       - name: Checkout job-hunt
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Checkout portfolio-data (private - source of truth for profile)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: mohansagark/portfolio-data
           path: portfolio-data
@@ -46,7 +46,7 @@ jobs:
           # to this repo only, so read it via a read-only deploy key instead.
           ssh-key: ${{ secrets.PORTFOLIO_DATA_DEPLOY_KEY }}
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
